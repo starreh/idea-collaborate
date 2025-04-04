@@ -1,2 +1,2 @@
 # Idea-Collaborate
-FinBox SSE Project
+FinBox SSE (Backend) Project
