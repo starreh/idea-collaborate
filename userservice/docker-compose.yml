@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  user_pgdb:
+    image: postgres:15
+    container_name: user_pgdb
+    restart: always
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    networks:
+      - user-network
+    volumes:
+      - user_pgdata:/var/lib/postgresql/data
+
+  user_service:
+    build: .
+    container_name: user_service
+    depends_on:
+      - user_pgdb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user_pgdb:5432/user_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      MANAGEMENT_METRICS_BINDERS_PROCESSOR_ENABLED: "false"
+      MANAGEMENT_METRICS_BINDERS_ENABLED: "false"
+    ports:
+      - "8081:8081"
+    networks:
+      - user-network
+
+volumes:
+  user_pgdata:
+
+networks:
+  user-network:
+    driver: bridge

@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: userservice
+
+  datasource:
+    url: jdbc:postgresql://user_pgdb:5432/user_db
+    username: user
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8081
+
+jwt:
+  enabled: true
+  secret: "TsGVZblxBdDwWO/lut4+UU9pntEt11HV+a8iOjYNS98="
+  access:
+    expiration: 900000
+  refresh:
+    expiration: 604800000
+
+logging:
+  level:
+    root: INFO
+    com.ideacollaborate.userservice: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+
+management:
+  metrics:
+    binders:
+      enabled: false
+      processor:
+        enabled: false
+    export:
+      defaults:
+        enabled: false
